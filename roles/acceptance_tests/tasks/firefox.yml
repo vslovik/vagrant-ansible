@@ -1,0 +1,6 @@
+---
+- name: install firefox
+  yum: name={{item}} state=present
+  with_items:
+    - libcanberra-gtk2
+    - firefox

@@ -1,0 +1,6 @@
+---
+# Xvfb is a virtual display framebuffer for X - the display system used by Linux.
+# It provides a fake display buffer for graphical programs to write to, thus
+# allowing any program to run headlessly.
+- name: install Xvfb
+  yum: name=Xvfb state=present

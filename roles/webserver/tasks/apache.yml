@@ -1,0 +1,37 @@
+---
+- name: ensure Apache is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+    - httpd-devel
+    - mod_ssl
+    - openssh
+  tags: httpd
+
+- name: add default apache host
+  template:
+    src: "000-default.conf.j2"
+    dest: "/etc/httpd/conf.d/000-default.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: add apache app vhosts
+  template:
+    src: "virtual-hosts.conf.j2"
+    dest: "/etc/httpd/conf.d/vh-{{ item.value.host }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_dict: hosts
+  notify: restart apache
+
+- name: ensure apache is always running
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  tags: httpd

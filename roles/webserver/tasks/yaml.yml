@@ -1,0 +1,22 @@
+---
+- name: download and unarchive yaml
+  unarchive:
+    src: http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
+    dest: /opt
+    copy: no
+
+- name: install yaml
+  command: "{{ item }} chdir=/opt/yaml-0.1.4"
+  with_items:
+    - ./configure --prefix=/usr/local
+    - make
+    - make install
+
+- name: Install PECL libaries.
+  shell: "yes \"\" | pecl install yaml"
+  register: pecl_result
+  changed_when: "pecl_result.rc == 0"
+  failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"
+
+#- shell: echo "extension=yaml.so" >> /etc/php.d/yaml.ini
+- lineinfile: dest=/etc/php.d/yaml.ini regexp=^extension= line=extension=yaml.so create=yes

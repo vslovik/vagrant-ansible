@@ -1,0 +1,4 @@
+---
+#- include: auth.yml
+#- include: git.yml
+#- include: composer.yml

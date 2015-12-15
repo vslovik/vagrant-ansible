@@ -1,0 +1,7 @@
+---
+# ToDo try not to install not needed packages
+- name: install desktop
+  yum: name=@xfce state=present
+
+- name: start desktop
+  shell: daemon -- startxfce4

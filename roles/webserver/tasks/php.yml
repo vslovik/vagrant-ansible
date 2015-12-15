@@ -1,0 +1,27 @@
+---
+- name: install php
+  yum: name={{item}} state=present
+  with_items:
+    - ImageMagick
+    - ImageMagick-devel
+    - php55w
+    - php55w-cli
+    - php55w-common
+    - php55w-devel
+    - php55w-gd
+    - php55w-mbstring
+    - php55w-pear
+    - php55w-opcache
+    - php55w-pdo
+    - php55w-xml
+    - php55w-mysqlnd
+    - php55w-pecl-imagick
+    - php55w-pecl-xdebug
+
+- name: install image magick
+  #shell: pecl install imagick
+  pear: name=pecl/xdebug state=present
+
+- name: modify php.ini
+  lineinfile: dest=/etc/php.ini regexp=^{{item.key}}= line={{item.key}}={{item.value}} backup=yes
+  with_items: php_settings

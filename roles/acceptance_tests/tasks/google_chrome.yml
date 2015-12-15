@@ -1,0 +1,48 @@
+---
+- file: path=/etc/yum.repos.d/google.repo state=touch mode="u+rw,g-wx,o-rwx"
+
+- name: enable google yum repository
+  blockinfile: |
+    dest=/etc/yum.repos.d/google.repo
+    force=yes
+    content="[google64]
+        name=Google - x86_64
+        baseurl=http://dl.google.com/linux/rpm/stable/x86_64
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"
+
+- name: install install google chrome
+  yum: name=google-chrome-stable state=present
+
+- file: path=/usr/local/share/chromedriver state=directory mode=0755
+
+#wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip -P /tmp
+# sudo mv -f /tmp/chromedriver /usr/local/share/chromedriver
+- name: download chrome driver
+  connection: local
+  get_url: url=http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip  dest=/usr/local/share/chromedriver force=no
+
+- name: create simlink to chrome driver
+  file:
+    src: /usr/local/share/chromedriver
+    dest: /usr/bin/chromedriver
+    state: link
+
+- name: create simlink to chrome driver
+  file:
+    src: /usr/local/share/chromedriver
+    dest: /usr/local/bin/chromedriver
+    state: link
+
+# https://coderwall.com/p/ynvi0q/updating-path-with-ansible-system-wide
+#export PATH="/usr/bin/chromedriver:$PATH"
+- name: add chromedriver to path
+  lineinfile: >
+      dest=/etc/environment
+      state=present
+      backrefs=yes
+      regexp='PATH=(["]*)((?!.*?{{extra_path}}).*?)(["]*)$'
+      line="PATH=\1\2:{{extra_path}}\3"
+  vars:
+    extra_path: /usr/bin/chromedriver

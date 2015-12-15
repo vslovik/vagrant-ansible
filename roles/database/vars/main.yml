@@ -1,0 +1,4 @@
+---
+mysql:
+  root_password: root
+  dump_path: /tmp

@@ -1,0 +1,41 @@
+---
+hosts:
+  my:
+    host: my.zanichelli.local
+    document_root: myzanichelli_source_v2/source/fe/public
+  api:
+    host: api-my.zanichelli.local
+    document_root: myzanichelli_source_v2/source/api/public
+  cdn:
+    host: cdn-my.zanichelli.local
+    document_root: myzanichelli_source_v2/source/cdn
+  admin:
+    host: admin-my.zanichelli.local
+    document_root: myzanichelli_source_v2/source/bo/public
+  dev:
+    host: dev.myzanichelli.local
+    document_root: myzanichelli_source/wwwRoot
+php_settings:
+  - { key: serialize_precision, value: 100  }
+  - { key: expose_php, value: Off }
+  - { key: max_execution_time, value: 600 }
+  - { key: max_input_time, value: 600 }
+  - { key: max_input_vars, value: 256000 }
+  - { key: memory_limit, value: 500M }
+  - { key: error_reporting, value: E_ALL & ~E_DEPRECATED }
+  - { key: html_errors, value: Off }
+  - { key: post_max_size, value: 32M }
+  - { key: upload_max_filesize, value: 32M }
+  - { key: session.entropy_length, value: 0 }
+  - { key: session.entropy_file, value: '' }
+  - { key: serialize_precision, value: 100 }
+  - { key: display_errors, value: On }
+  - { key: display_startup_errors, value: On }
+  - { key: html_errors, value: On }
+  - { key: log_errors, value: On }
+  - { key: opcache.enable, value: 0 }
+  - { key: date.timezone, value: Europe/Rome }
+node_vars:
+  nvm_dir: /usr/local/nvm
+  nvm_version: "0.26.1"
+  node_version: "0.10.33"

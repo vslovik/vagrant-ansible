@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ErrorLog /var/log/httpd/error.log
+    <Directory /var/www/html>
+        Options Includes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>

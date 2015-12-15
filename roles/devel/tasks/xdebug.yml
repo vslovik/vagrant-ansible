@@ -1,0 +1,15 @@
+---
+- name: install xdebug
+  yum: name=php55w-pecl-xdebug state=present
+
+- name: install pecl package
+  pear: name=pecl/xdebug state=present
+
+- name: configure xdebug
+  template:
+    src: "xdebug.ini.j2"
+    dest: "/etc/php.d/xdebug.ini"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache

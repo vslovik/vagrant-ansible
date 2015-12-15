@@ -1,0 +1,6 @@
+---
+- name: remove alsa
+  yum: name={{item}} state=absent
+  with_items:
+    - alsa-firmware
+    - alsa-lib

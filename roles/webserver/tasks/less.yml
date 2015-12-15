@@ -1,0 +1,10 @@
+---
+- name: install node tools
+  sudo: yes
+  sudo_user: vagrant
+  npm: >-
+    name=less
+    global=yes
+    version=1.4.2
+  environment:
+    PATH: "/home/vagrant/.nvm/v0.10.33/bin:{{ ansible_env.PATH }}"

@@ -1,0 +1,19 @@
+---
+- name: install mysql community release
+  yum: name=http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm state=present
+
+- name: install mysql
+  yum: name={{item}} state=present
+  with_items:
+    - mysql
+    - mysql-community-server
+
+- name: ensure mysqld is always running
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+  tags: mysqld
+
+#- name: set mysql root password
+#  shell: mysqladmin -u root password {{mysql.root_password}}

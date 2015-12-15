@@ -1,0 +1,24 @@
+---
+- name: look for java in PATH
+  shell: type -p java | wc -l
+  register: result
+
+- name: look for java in JAVA_HOME
+  shell: "[[ -n {$JAVA_HOME} ]] && [[ -x {$JAVA_HOME}/bin/java ]] | wc -l"
+  register: result
+  when: result != 1
+
+- name: download java
+  connection: local
+  get_url: url=http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm  dest=/tmp force=no
+  when: result != 1
+
+- shell: alternatives --display java  | grep jdk1.8.0_66 | wc -l
+  register: result
+
+- name: install java
+  command: rpm -Uvh jdk-8u66-linux-x64.rpm chdir=/tmp
+  when: result == 0
+
+- shell: alternatives --install /usr/bin/java java /usr/java/latest/bin/java 2
+  when: result != 1
