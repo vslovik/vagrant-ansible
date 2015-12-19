@@ -5,6 +5,9 @@ Vagrant.configure(2) do |config|
   config.vm.network :forwarded_port, guest: 80, host: 80
   config.vm.network :forwarded_port, guest: 443, host: 443
   config.vm.network :forwarded_port, guest: 3306, host: 3306
+  config.vm.network :forwarded_port, guest: 1025, host: 1025
+  config.vm.network :forwarded_port, guest: 1080, host: 1080
+  config.vm.network :forwarded_port, guest: 6379, host: 6379
 
   config.vm.network :private_network, ip: "192.168.10.10", netmask: "255.255.255.0"
 
@@ -25,11 +28,11 @@ Vagrant.configure(2) do |config|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
-  config.vm.synced_folder "../../Documenti/myzanichelli_source_v2",
-    "/vagrant/myzanichelli_source_v2",
+  config.vm.synced_folder "../myzanichelli_source_v2",
+    "/opt/myzanichelli_source_v2",
      mount_options: ["dmode=777", "fmode=777"]
-  config.vm.synced_folder "../../Documenti/myzanichelli_source",
-    "/vagrant/myzanichelli_source",
+  config.vm.synced_folder "../myzanichelli_source",
+    "/opt/myzanichelli_source",
     mount_options: ["dmode=777", "fmode=777"]
 
   config.vm.provision :ansible do |ansible|

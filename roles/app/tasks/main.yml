@@ -1,0 +1,8 @@
+---
+- include: vhosts.yml
+- include: auth.yml
+- include: git.yml
+- include: composer.yml
+- include: db.yml
+- include: less.yml
+- include: simlinks.yml

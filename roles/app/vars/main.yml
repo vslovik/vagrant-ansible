@@ -1,0 +1,29 @@
+---
+hosts:
+  my:
+    host: my.zanichelli.local
+    document_root: '{{apps.myz.dir}}/source/fe/public'
+  api:
+    host: api-my.zanichelli.local
+    document_root: '{{apps.myz.dir}}/source/api/public'
+  cdn:
+    host: cdn-my.zanichelli.local
+    document_root: '{{apps.myz.dir}}/source/cdn'
+  admin:
+    host: admin-my.zanichelli.local
+    document_root: '{{apps.myz.dir}}/source/bo/public'
+  dev:
+    host: dev.myzanichelli.local
+    document_root: '{{apps.old.dir}}/wwwRoot'
+links:
+  - { src: "{{myz_layout_path}}/css", dest: "{{myz_source_path}}/source/cdn/fe/css"}
+  - { src: "{{myz_layout_path}}/fonts", dest: "{{myz_source_path}}/source/cdn/fe/fonts"}
+  - { src: "{{myz_layout_path}}/images", dest: "{{myz_source_path}}/source/cdn/fe/images"}
+  - { src: "{{myz_layout_path}}/js", dest: "{{myz_source_path}}/source/cdn/fe/js"}
+  - { src: "{{old_myz_source_path}}/api", dest: "{{myz_source_path}}/source/fe/public/api"}
+  - { src: "{{old_myz_source_path}}/static/myZanichelli/idp", dest: "{{myz_source_path}}/source/fe/public/static/myZanichelli/idp"}
+  - { src: "{{old_myz_source_path}}/static/myZanichelli/templates", dest: "{{myz_source_path}}/source/fe/public/static/myZanichelli/templates"}
+  - { src: "{{old_myz_source_path}}/myzanichelliAdmin", dest: "{{myz_source_path}}/source/bo/public/v1"}
+  - { src: "{{myz_source_path}}/source/vendor/almasaeed2010/adminlte/dist", dest: "{{myz_source_path}}/source/cdn/bo/adminlte"}
+  - { src: "{{myz_source_path}}/source/vendor/almasaeed2010/adminlte/plugins", dest: "{{myz_source_path}}/source/cdn/bo/adminlte_plugins"}
+  #- { src: "{{myz_source_path}}/scripts/localEnv", dest: "{{myz_vendor_path}}/myz/tools/deploy/localEnv"}

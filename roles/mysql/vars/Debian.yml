@@ -1,0 +1,8 @@
+---
+__mysql_daemon: mysql
+__mysql_packages:
+  - mysql-common
+  - mysql-server
+mysql_config_file: /etc/mysql/my.cnf
+mysql_config_include_dir: /etc/mysql/conf.d
+mysql_socket: /var/run/mysqld/mysqld.sock

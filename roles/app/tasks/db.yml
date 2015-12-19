@@ -1,0 +1,21 @@
+---
+- name: create db
+  mysql_db:
+    name={{item}}
+    state=present
+    login_user=myz
+    login_password=myz
+  with_items:
+    - myzanichelli_anagrafica
+    - myzanichelli_anagrafica_test
+
+- name: bootstrap db
+  mysql_db:
+    state=import
+    login_user=myz
+    login_password=myz
+    name={{item}}
+    target={{apps_dir}}/{{apps.myz.dir}}/{{apps.myz.db_dump_dir}}/{{item}}.sql
+  with_items:
+    - myzanichelli_anagrafica
+    - myzanichelli_anagrafica_test

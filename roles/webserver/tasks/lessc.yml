@@ -1,0 +1,13 @@
+---
+- name: install nodejs from the epel repository
+  yum: name={{item}} state=present
+  with_items:
+    - nodejs
+    - npm
+
+- name: install ruby packages
+  npm:
+    name: less
+    state: present
+    version: 1.4.2
+    global: yes

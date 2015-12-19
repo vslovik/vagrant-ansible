@@ -12,11 +12,11 @@
     - make
     - make install
 
-- name: Install PECL libaries.
+- name: install yaml pecl libary
   shell: "yes \"\" | pecl install yaml"
   register: pecl_result
   changed_when: "pecl_result.rc == 0"
   failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"
 
-#- shell: echo "extension=yaml.so" >> /etc/php.d/yaml.ini
-- lineinfile: dest=/etc/php.d/yaml.ini regexp=^extension= line=extension=yaml.so create=yes
+- name: enable php yaml module
+  lineinfile: dest=/etc/php.d/yaml.ini regexp=^extension= line=extension=yaml.so create=yes

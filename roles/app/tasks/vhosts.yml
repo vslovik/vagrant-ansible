@@ -1,0 +1,28 @@
+---
+- name: create ssl dir
+  file: path=/etc/httpd/ssl state=directory mode=0755
+
+- name: 'create self-signed SSL cert: genrsa'
+  command: openssl genrsa -out "/etc/httpd/ssl/{{ item.value.host }}.key" 1024 2>/dev/null
+  with_dict: hosts
+  notify: restart apache
+
+- name: 'create self-signed SSL cert: req -new -key'
+  command: openssl req -new -key /etc/httpd/ssl/{{ item.value.host }}.key -out /etc/httpd/ssl/{{ item.value.host }}.csr -subj "/CN={{ item.value.host }}/O=Vagrant/C=UK"
+  with_dict: hosts
+  notify: restart apache
+
+- name: 'create self-signed SSL cert: x509 -req'
+  shell: openssl x509 -req -days 365 -in /etc/httpd/ssl/{{ item.value.host }}.csr -signkey /etc/httpd/ssl/{{ item.value.host }}.key -out /etc/httpd/ssl/{{ item.value.host }}.crt
+  with_dict: hosts
+  notify: restart apache
+
+- name: add apache app vhosts
+  template:
+    src: "virtual-hosts.conf.j2"
+    dest: "/etc/httpd/conf.d/vh-{{ item.value.host }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_dict: hosts
+  notify: restart apache

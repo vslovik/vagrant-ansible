@@ -1,0 +1,8 @@
+---
+- name: setup the git repo
+  git: repo={{item.value.repo}}
+       version=develop
+       dest={{apps_dir}}/{{item.value.dir}}
+       accept_hostkey=True
+       key_file="/home/vagrant/.ssh/id_rsa"
+  with_dict: apps

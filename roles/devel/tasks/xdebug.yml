@@ -2,7 +2,7 @@
 - name: install xdebug
   yum: name=php55w-pecl-xdebug state=present
 
-- name: install pecl package
+- name: install xdebug pecl libary
   pear: name=pecl/xdebug state=present
 
 - name: configure xdebug

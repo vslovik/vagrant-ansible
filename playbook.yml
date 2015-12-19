@@ -2,10 +2,11 @@
 - hosts: all
   sudo: true
   roles:
-#   - webserver
-#    - database
-#    - devel
-#    - mailcatcher
-    - acceptance_tests
-#    - cleanup
-#    - deploy
+    - acceptance
+    - webserver
+    - mysql
+    - redis
+    - devel
+    - mailcatcher
+    - cleanup
+    - app

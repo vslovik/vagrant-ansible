@@ -1,7 +1,0 @@
----
-- include: desktop.yml
-- include: java.yml
-- include: selenium.yml
-- include: xvfb.yml
-- include: firefox.yml
-- include: google_chrome.yml

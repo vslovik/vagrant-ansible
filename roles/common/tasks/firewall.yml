@@ -1,0 +1,6 @@
+---
+- name: stop firewall (~ systemctl stop firewalld, chkconfig firewalld off)
+  service: name=firewalld state=stopped
+
+- name: disable SElinux (setenforce 0)
+  selinux: policy=targeted state=permissive

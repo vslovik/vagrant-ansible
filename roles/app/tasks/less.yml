@@ -1,0 +1,3 @@
+---
+- name: less compile
+  shell: lessc -x "less/all.less" > "css/all.css" chdir={{apps_dir}}/{{apps.myz.dir}}/source/vendor/myz/layout/
