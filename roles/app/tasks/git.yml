@@ -1,0 +1,13 @@
+---
+- name: check for changes
+  command: git status chdir=/opt/myzanichelli_source_v2
+  register: result
+
+- name: setup the git repo
+  git: repo={{item.value.repo}}
+       version=develop
+       dest={{apps_dir}}/{{item.value.dir}}
+       accept_hostkey=True
+       key_file="/home/vagrant/.ssh/id_rsa"
+  with_dict: apps
+  when: result.stdout_lines.1 == "nothing to commit, working directory clean"

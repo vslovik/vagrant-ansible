@@ -1,0 +1,16 @@
+---
+apps_dir: /opt
+apps:
+  myz:
+    repo: git@bitbucket.org:zanichelli/myzanichelli_source_v2.git
+    dir: myzanichelli_source_v2
+    db_dump_dir: tests/db
+  old:
+    repo: git@bitbucket.org:zanichelli/myzanichelli_source.git
+    dir: myzanichelli_source
+old_myz_source_path: '{{apps_dir}}/myzanichelli_source/wwwRoot'
+myz_source_path: '{{apps_dir}}/myzanichelli_source_v2'
+myz_vendor_path: '{{myz_source_path}}/source/vendor'
+myz_layout_path: '{{myz_vendor_path}}/myz/layout'
+myz_cache_base: '{{myz_source_path}}/source'
+old_myz_cache_base: '{{old_myz_source_path}}/wwwRoot'

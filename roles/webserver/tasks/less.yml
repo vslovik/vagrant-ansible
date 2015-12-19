@@ -1,5 +1,5 @@
 ---
-- name: install node tools
+- name: install less
   sudo: yes
   sudo_user: vagrant
   npm: >-

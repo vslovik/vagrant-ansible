@@ -1,0 +1,20 @@
+- name: install mailcatcher dependencies
+  yum: pkg={{ item }} state=present
+  with_items:
+      - sqlite
+      - ruby-devel
+      - ruby
+
+- name: check for mailcatcher
+  stat:
+    path=/usr/local/bin/mailcatcher
+  register: mailcatcher_installed
+
+- name: install mailcatcher
+  gem: name=mailcatcher state=latest
+  when: not mailcatcher_installed.stat.exists
+
+- name: Create upstart script for mailcatcher
+  template: src=mailcatcher.j2 dest=/etc/init.d/mailcatcher mode=0755
+  notify:
+    - restart mailcatcher

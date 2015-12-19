@@ -16,12 +16,13 @@
     - php55w-xml
     - php55w-mysqlnd
     - php55w-pecl-imagick
-    - php55w-pecl-xdebug
 
-- name: install image magick
-  #shell: pecl install imagick
-  pear: name=pecl/xdebug state=present
+- name: install imagick pecl libary
+  shell: "yes \"\" | pecl install imagick"
+  register: pecl_result
+  changed_when: "pecl_result.rc == 0"
+  failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"
 
 - name: modify php.ini
   lineinfile: dest=/etc/php.ini regexp=^{{item.key}}= line={{item.key}}={{item.value}} backup=yes
-  with_items: php_settings
+  with_items: php

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+PID_FILE=/var/run/mailcatcher.pid
+NAME=mailcatcher
+PROG=/usr/local/bin/mailcatcher
+USER=vagrant
+GROUP=vagrant
+
+description() {
+    echo "Mailcatcher"
+  	return $?
+}
+
+start() {
+	echo -n "Starting MailCatcher"
+	sudo mailcatcher -v --ip={{ mailcatcher_ip }} \
+	--smtp-ip={{ mailcatcher_smtp_ip }} \
+	--smtp-port={{ mailcatcher_smtp_port }} \
+	--http-ip={{ mailcatcher_http_ip }} \
+	--http-port={{ mailcatcher_http_port }}
+	echo "."
+	return $?
+}
+
+stop() {
+	echo -n "Stopping MailCatcher"
+	sudo pkill mailcatcher
+	echo "."
+	return $?
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+		;;
+esac

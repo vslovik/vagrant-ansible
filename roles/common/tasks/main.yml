@@ -1,9 +1,6 @@
 ---
-- name: install utils
-  yum: name={{item}} state=present
-  with_items:
-    - zip
-    - unzip
-
-- name: install git
-  yum: name=git state=present
+- include: archive.yml
+- include: git.yml
+- include: net.yml
+- include: firewall.yml
+- include: pip.yml

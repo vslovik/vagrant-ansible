@@ -1,8 +1,0 @@
----
-- name: setup the git repo
-  git: repo=git@bitbucket.org:zanichelli/myzanichelli_source_v2.git
-       version=develop
-       dest=/opt
-       accept_hostkey=True
-       key_file="/vagrant/.ssh/id_rsa"
-  vars: git_repo

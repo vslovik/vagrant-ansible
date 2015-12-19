@@ -1,13 +1,32 @@
 ---
-- name: download and unarchive phpmyadmin
-  unarchive: src=https://files.phpmyadmin.net/phpMyAdmin/4.5.0.2/phpMyAdmin-4.5.0.2-english.tar.bz2 dest=/var/www/html/phpmyadmin
+- stat: path={{phpmyadmin_path}}/config.inc.php
+  register: config
+
+- name: download phpmyadmin
+  get_url:
+    url: https://files.phpmyadmin.net/phpMyAdmin/{{phpmyadmin_version}}/phpMyAdmin-4.5.0.2-english.tar.bz2
+    dest: /tmp
+    validate_certs: False
+  when: config.stat.exists == 'false'
+
+- name: unarchive phpmyadmin
+  unarchive:
+    src: /tmp/phpMyAdmin-{{phpmyadmin_version}}-english.tar.bz2
+    dest: /tmp
+    copy: no
+  when: config.stat.exists == 'false'
+
+- name: move phpmyadmin to {{phpmyadmin_path}}
+  command: creates="{{phpmyadmin_path}}" mv /tmp/phpMyAdmin-{{phpmyadmin_version}}-english {{phpmyadmin_path}}
+  when: config.stat.exists == 'false'
 
 - name: make config out of sample
-  shell: mv config.sample.inc.php config.inc.php chdir=/var/www/html/phpmyadmin
+  shell: mv config.sample.inc.php config.inc.php chdir={{phpmyadmin_path}}
+  when: config.stat.exists == 'false'
 
 - name: add credentials into config
   blockinfile: |
-    dest=/var/www/html/phpmyadmin/config.inc.php backup=yes
+    dest={{phpmyadmin_path}}/config.inc.php backup=yes
     content="$cfg['Servers'][$i]['auth_type'] = 'config'
         $cfg['Servers'][$i]['user'] = 'root'
         $cfg['Servers'][$i]['password'] = 'root'"

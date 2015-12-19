@@ -1,0 +1,5 @@
+---
+- name: install webtatic release
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+    state: present

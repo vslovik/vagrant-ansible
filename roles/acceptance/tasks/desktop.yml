@@ -1,0 +1,11 @@
+---
+- name: check desktop installed
+  shell: yum list installed | grep xorg | wc -l
+  register: result
+
+- name: install desktop
+  yum: name=@xfce state=present
+  when: result.stdout == 0
+
+- name: start desktop
+  shell: startxfce4 &
