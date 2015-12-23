@@ -5,16 +5,53 @@
     state: touch
     mode: "u+rw,g-wx,o-rwx"
 
-- name: enable google yum repository
-  blockinfile: |
+  # module blockinfile does not function for Ubuntu 14.04 with ansible installed with apt-get
+  # istallation from the source on Ubuntu 14.04 requires additional packages installation
+- name: "enable google yum repository: 1"
+  lineinfile:
     dest=/etc/yum.repos.d/google.repo
     force=yes
-    content="[google64]
-        name=Google - x86_64
-        baseurl=http://dl.google.com/linux/rpm/stable/x86_64
-        enabled=1
-        gpgcheck=1
-        gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    regexp=google64
+    line="[google64]"
+    backup=yes
+
+- name: "enable google yum repository. 2"
+  lineinfile:
+    dest=/etc/yum.repos.d/google.repo
+    force=yes
+    regexp=^name=Google
+    line="name=Google - x86_64"
+    backup=yes
+
+- name: "enable google yum repository: 3"
+  lineinfile:
+    dest={{phpmyadmin_path}}/config.inc.php
+    regexp=^baseurl
+    line="baseurl=http://dl.google.com/linux/rpm/stable/x86_64"
+    backup=yes
+
+- name: "enable google yum repository: 4"
+  lineinfile:
+    dest=/etc/yum.repos.d/google.repo
+    force=yes
+    regexp=^enabled
+    line="enabled=1"
+    backup=yes
+
+- name: "enable google yum repository. 5"
+  lineinfile:
+    dest=/etc/yum.repos.d/google.repo
+    force=yes
+    regexp=^gpgcheck
+    line="gpgcheck=1"
+    backup=yes
+
+- name: "enable google yum repository: 6"
+  lineinfile:
+    dest={{phpmyadmin_path}}/config.inc.php
+    regexp=^gpgkey
+    line="gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    backup=yes
 
 - name: install google chrome
   yum: name=google-chrome-stable state=present
