@@ -4,4 +4,3 @@
     name: redis
     state: restarted
     enabled: yes
-  tags: redis
