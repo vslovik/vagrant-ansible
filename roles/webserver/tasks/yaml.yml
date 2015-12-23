@@ -1,7 +1,12 @@
 ---
-- name: download and unarchive yaml
+- name: download yaml package
+  get_url:
+    url: http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
+    dest: /tmp
+
+- name: unarchive yaml package
   unarchive:
-    src: http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz
+    src: /tmp/yaml-0.1.4.tar.gz
     dest: /opt
     copy: no
 
