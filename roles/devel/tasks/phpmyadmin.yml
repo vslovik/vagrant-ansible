@@ -7,26 +7,42 @@
     url: https://files.phpmyadmin.net/phpMyAdmin/{{phpmyadmin_version}}/phpMyAdmin-4.5.0.2-english.tar.bz2
     dest: /tmp
     validate_certs: False
-  when: config.stat.exists == 'false'
+  when: config.stat.exists == false
 
 - name: unarchive phpmyadmin
   unarchive:
     src: /tmp/phpMyAdmin-{{phpmyadmin_version}}-english.tar.bz2
     dest: /tmp
     copy: no
-  when: config.stat.exists == 'false'
+  when: config.stat.exists == false
 
 - name: move phpmyadmin to {{phpmyadmin_path}}
   command: creates="{{phpmyadmin_path}}" mv /tmp/phpMyAdmin-{{phpmyadmin_version}}-english {{phpmyadmin_path}}
-  when: config.stat.exists == 'false'
+  when: config.stat.exists == false
 
 - name: make config out of sample
   shell: mv config.sample.inc.php config.inc.php chdir={{phpmyadmin_path}}
-  when: config.stat.exists == 'false'
+  when: config.stat.exists == false
 
-- name: add credentials into config
-  blockinfile: |
-    dest={{phpmyadmin_path}}/config.inc.php backup=yes
-    content="$cfg['Servers'][$i]['auth_type'] = 'config'
-        $cfg['Servers'][$i]['user'] = 'root'
-        $cfg['Servers'][$i]['password'] = 'root'"
+  # module blockinfile does not function for Ubuntu 14.04 with ansible installed with apt-get
+  # istallation from the source on Ubuntu 14.04 requires additional packages installation
+- name: "add credentials into config: auth type"
+  lineinfile:
+    dest={{phpmyadmin_path}}/config.inc.php
+    regexp=auth_type
+    line="$cfg['Servers'][$i]['auth_type'] = 'config'"
+    backup=yes
+
+- name: "add credentials into config: user"
+  lineinfile:
+    dest={{phpmyadmin_path}}/config.inc.php
+    regexp=auth_type
+    line="$cfg['Servers'][$i]['user'] = 'root'"
+    backup=yes
+
+- name: "add credentials into config: password"
+  lineinfile:
+    dest={{phpmyadmin_path}}/config.inc.php
+    regexp=auth_type
+    line="$cfg['Servers'][$i]['password'] = 'root'"
+    backup=yes
