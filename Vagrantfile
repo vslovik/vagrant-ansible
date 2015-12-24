@@ -28,6 +28,9 @@ Vagrant.configure(2) do |config|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
+  config.vm.synced_folder "~/.ssh",
+    "/home/vagrant/keys/",
+     mount_options: ["dmode=777", "fmode=600"]
   config.vm.synced_folder "../myzanichelli_source_v2",
     "/opt/myzanichelli_source_v2",
      mount_options: ["dmode=777", "fmode=777"]
