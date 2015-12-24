@@ -7,14 +7,15 @@ Tested with Vagrant v 1.7.4
 
 Requirements
 ------------------------
-1. Ansible installed (See http://docs.ansible.com/ansible/intro_installation.html)
+1.Virtualbox, Vagrant
+2. Ansible installed (See http://docs.ansible.com/ansible/intro_installation.html)
 
-2. Two dir have to be created to be mapped:
+3. Two dir have to be created to be mapped:
 
     $ mkdir ../myzanichelli_source_v2
     $ mkdir ../myzanichelli_source
 
-3. Vagrant plugin hostmanager have to be installed
+4. Vagrant plugin hostmanager have to be installed
 
     $ vagrant plugin install vagrant-hostmanager
 

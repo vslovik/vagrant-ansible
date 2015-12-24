@@ -49,6 +49,7 @@
 - name: "enable google yum repository: 6"
   lineinfile:
     dest={{phpmyadmin_path}}/config.inc.php
+    force=yes
     regexp=^gpgkey
     line="gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"
     backup=yes

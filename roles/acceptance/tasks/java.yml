@@ -6,21 +6,17 @@
 - name: look for java in JAVA_HOME
   shell: "[[ -n {$JAVA_HOME} ]] && [[ -x {$JAVA_HOME}/bin/java ]] | wc -l"
   register: result
-  when: result != 1
-
-- name: download java
-  connection: local
-  get_url: url=http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm  dest=/tmp force=no
-  when: result != 1
+  when: result.stdout != "1"
 
 - name: test if java installed
   shell: alternatives --display java  | grep jdk1.8.0_66 | wc -l
   register: result
 
-- name: install java
-  command: rpm -Uvh jdk-8u66-linux-x64.rpm chdir=/tmp
-  when: result == 0
+# Seems that ansible distribution fot ubuntu trustycan not follow redirects when downloading with get_url module
+- name: install the java rpm from a remote repo
+  command: 'cd /tmp && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm" && rpm -Uvh jdk-8u66-linux-x64.rpm'
+  when: result.stdout == "0"
 
-- name: choose java alternative
+- name: choose java altresult.stdout == "0"ernative
   shell: alternatives --install /usr/bin/java java /usr/java/latest/bin/java 2
-  when: result != 1
+  when: result.stdout == "0"

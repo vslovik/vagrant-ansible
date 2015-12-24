@@ -2,7 +2,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "centos/7"
 
-  config.vm.network :forwarded_port, guest: 80, host: 80
+  config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :forwarded_port, guest: 443, host: 443
   config.vm.network :forwarded_port, guest: 3306, host: 3306
   config.vm.network :forwarded_port, guest: 1025, host: 1025
@@ -35,9 +35,7 @@ Vagrant.configure(2) do |config|
     "/opt/myzanichelli_source",
     mount_options: ["dmode=777", "fmode=777"]
 
-  config.vm.provision :ansible_local do |ansible|
+  config.vm.provision :ansible do |ansible|
     ansible.playbook = "playbook.yml"
-    ansible.install = true
-    ansible.version = "latest"
   end
 end
