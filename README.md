@@ -9,7 +9,7 @@ Requirements
 ------------------------
 1.Virtualbox, Vagrant
 
-2.Vagrant
+2.Vagrant 1.8
 
 3. Two dir have to be created to be mapped:
 
