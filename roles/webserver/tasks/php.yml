@@ -24,5 +24,5 @@
   failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"
 
 - name: modify php.ini
-  lineinfile: dest=/etc/php.ini regexp=^{{item.key}}= line={{item.key}}={{item.value}} backup=yes
+  lineinfile: dest=/etc/php.ini regexp=^{{item.key}}= line="{{item.key}}={{item.value}}" backup=yes
   with_items: php

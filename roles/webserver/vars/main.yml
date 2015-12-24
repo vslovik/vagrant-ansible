@@ -6,7 +6,7 @@ php:
   - { key: max_input_time, value: 600 }
   - { key: max_input_vars, value: 256000 }
   - { key: memory_limit, value: 500M }
-  - { key: error_reporting, value: E_ALL & ~E_DEPRECATED }
+  - { key: error_reporting, value: "E_ALL & ~E_DEPRECATED" }
   - { key: html_errors, value: Off }
   - { key: post_max_size, value: 32M }
   - { key: upload_max_filesize, value: 32M }
