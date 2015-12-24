@@ -35,7 +35,10 @@ Vagrant.configure(2) do |config|
     "/opt/myzanichelli_source",
     mount_options: ["dmode=777", "fmode=777"]
 
-  config.vm.provision :ansible do |ansible|
+  config.vm.provision :ansible_local do |ansible|
+    #ansible.verbose = "v"
     ansible.playbook = "playbook.yml"
+    ansible.install = true
+    ansible.version = "latest"
   end
 end
