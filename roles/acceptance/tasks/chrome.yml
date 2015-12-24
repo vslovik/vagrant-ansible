@@ -65,11 +65,14 @@
     mode: 0755
 
 - name: download chrome driver
-  connection: local
-  get_url:
-    url: http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip
-    dest: /usr/local/share/chromedriver
-    force: no
+  command: 'cd /tmp && wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip'
+
+- name: unarchive chrome driver
+  unarchive:
+    src: /tmp/chromedriver_linux64.zip
+    dest: /tmp
+
+- command: mv /tmp/chromedriver_linux64 /usr/bin/chromedriver
 
 - name: create simlink to chrome driver
   file:

@@ -1,7 +1,7 @@
 ---
 - stat: path=/opt/selenium-server-standalone-2.48.2.jar
-  register: config
+  register: jarfile
 
 - name: download selenium
   command: 'cd /opt && wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar'
-  when: config.stat.exists == false
+  when: jarfile.stat.exists == false

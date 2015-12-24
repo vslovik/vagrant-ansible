@@ -6,3 +6,4 @@
 - include: db.yml
 - include: less.yml
 - include: simlinks.yml
+- include: config.yml

@@ -5,6 +5,8 @@ apps:
     repo: git@bitbucket.org:zanichelli/myzanichelli_source_v2.git
     dir: myzanichelli_source_v2
     db_dump_dir: tests/db
+    config:
+      local: source/libs/application/config/config_localhost.xml
   old:
     repo: git@bitbucket.org:zanichelli/myzanichelli_source.git
     dir: myzanichelli_source

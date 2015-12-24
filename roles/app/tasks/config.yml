@@ -1,0 +1,7 @@
+---
+- stat: path=/opt/selenium-server-standalone-2.48.2.jar
+  register: config
+
+- name: create local config
+  template: src=config_localhost.xml.j2 dest={{apps_dir}}/{{apps.myz.dir}}/{{apps.myz.config.local}} mode=0644
+  when: config.stat.exists == false
