@@ -30,13 +30,13 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder "~/.ssh",
     "/home/vagrant/keys/",
-     mount_options: ["dmode=777", "fmode=600"]
+     mount_options: ["dmode=755", "fmode=600"]
   config.vm.synced_folder "../myzanichelli_source_v2",
     "/opt/myzanichelli_source_v2",
-     mount_options: ["dmode=777", "fmode=777"]
+     mount_options: ["dmode=755", "fmode=777"]
   config.vm.synced_folder "../myzanichelli_source",
     "/opt/myzanichelli_source",
-    mount_options: ["dmode=777", "fmode=777"]
+    mount_options: ["dmode=755", "fmode=777"]
 
   config.vm.provision :ansible_local do |ansible|
     #ansible.verbose = "v"
