@@ -14,6 +14,3 @@
 - name: adds rsa identities to the authentication agent
   sudo: no
   shell: 'eval `ssh-agent -s` && ssh-add /home/vagrant/.ssh/id_rsa'
-
-- name: create private key file
-  file: path="/home/vagrant/.ssh/id_rsa" mode=0600 owner=vagrant
