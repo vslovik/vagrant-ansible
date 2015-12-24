@@ -1,5 +1,5 @@
 ---
-- stat: path=/opt/selenium-server-standalone-2.48.2.jar
+- stat: path={{apps_dir}}/{{apps.myz.dir}}/{{apps.myz.config.local}}
   register: config
 
 - name: create local config
