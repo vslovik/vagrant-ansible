@@ -4,7 +4,7 @@
   register: result
 
 - name: install desktop
-  yum: name=@xfce state=present
+  shell: yum --disablerepo=epel install @xfce
   when: result.stdout == "0"
 
 - name: start desktop

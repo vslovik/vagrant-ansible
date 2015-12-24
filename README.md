@@ -8,7 +8,8 @@ Tested with Vagrant v 1.7.4
 Requirements
 ------------------------
 1.Virtualbox, Vagrant
-2. Ansible installed (See http://docs.ansible.com/ansible/intro_installation.html)
+
+2.Vagrant
 
 3. Two dir have to be created to be mapped:
 
