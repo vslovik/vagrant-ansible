@@ -1,11 +1,11 @@
 ---
-- name: create public key file
+- name: set correct mode to public key file
   copy: src="/home/vagrant/keys/id_rsa.pub"
         dest="/home/vagrant/.ssh/id_rsa.pub"
         mode=0644
         owner=vagrant
 
-- name: create private key file
+- name: ensure correct rights of private key file
   copy: src="/home/vagrant/keys/id_rsa"
         dest="/home/vagrant/.ssh/id_rsa"
         mode=0600
