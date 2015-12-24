@@ -2,7 +2,7 @@
 - hosts: all
   sudo: true
   roles:
-    - acceptance
+#    - acceptance
     - webserver
     - mysql
     - redis

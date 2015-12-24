@@ -3,11 +3,11 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
   config.vm.network :forwarded_port, guest: 80, host: 8080
-  config.vm.network :forwarded_port, guest: 443, host: 443
-  config.vm.network :forwarded_port, guest: 3306, host: 3306
-  config.vm.network :forwarded_port, guest: 1025, host: 1025
-  config.vm.network :forwarded_port, guest: 1080, host: 1080
-  config.vm.network :forwarded_port, guest: 6379, host: 6379
+  config.vm.network :forwarded_port, guest: 443, host: 4430
+  config.vm.network :forwarded_port, guest: 3306, host: 33060
+  config.vm.network :forwarded_port, guest: 1025, host: 10250
+  config.vm.network :forwarded_port, guest: 1080, host: 10800
+  config.vm.network :forwarded_port, guest: 6379, host: 63790
 
   config.vm.network :private_network, ip: "192.168.10.10", netmask: "255.255.255.0"
 
