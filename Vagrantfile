@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
     mount_options: ["dmode=755", "fmode=777"]
 
   config.vm.provision :ansible_local do |ansible|
-    ansible.verbose = "v"
+    #ansible.verbose = "v"
     ansible.playbook = "playbook.yml"
     ansible.install = true
     ansible.version = "latest"
