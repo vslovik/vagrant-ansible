@@ -13,9 +13,12 @@
   register: result
 
 # Seems that ansible distribution fot ubuntu trustycan not follow redirects when downloading with get_url module
-- name: install the java rpm from a remote repo
-  command: 'cd /tmp && wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm" && rpm -Uvh jdk-8u66-linux-x64.rpm'
+- name: download java rpm
+  command: 'wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm" chdir=/tmp'
   when: result.stdout == "0"
+
+- name: install java
+  command: 'rpm -Uvh jdk-8u66-linux-x64.rpm chdir=/tmp'
 
 - name: choose java altresult.stdout == "0"ernative
   shell: alternatives --install /usr/bin/java java /usr/java/latest/bin/java 2
