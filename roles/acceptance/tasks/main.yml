@@ -4,4 +4,4 @@
 - include: selenium.yml
 - include: xvfb.yml
 - include: firefox.yml
-- include: chrome.yml
+#- include: chrome.yml
