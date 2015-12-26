@@ -1,89 +1,28 @@
 ---
-- name: change google.repo file rights
-  file:
-    path: /etc/yum.repos.d/google.repo
-    state: touch
-    mode: "u+rw,g-wx,o-rwx"
+- stat: path=/etc/yum.repos.d/google.repo
+  register: config
 
-  # module blockinfile does not function for Ubuntu 14.04 with ansible installed with apt-get
-  # istallation from the source on Ubuntu 14.04 requires additional packages installation
-- name: "enable google yum repository: 1"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=google64
-    line="[google64]"
-    backup=yes
-
-- name: "enable google yum repository. 2"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=^name=Google
-    line="name=Google - x86_64"
-    backup=yes
-
-- name: "enable google yum repository: 3"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=^baseurl
-    line="baseurl=http://dl.google.com/linux/rpm/stable/x86_64"
-    backup=yes
-
-- name: "enable google yum repository: 4"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=^enabled
-    line="enabled=1"
-    backup=yes
-
-- name: "enable google yum repository. 5"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=^gpgcheck
-    line="gpgcheck=1"
-    backup=yes
-
-- name: "enable google yum repository: 6"
-  lineinfile:
-    dest=/etc/yum.repos.d/google.repo
-    force=yes
-    regexp=^gpgkey
-    line="gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub"
-    backup=yes
+- name: create google repo config
+  template: src=google.repo.j2 dest=/etc/yum.repos.d/google.repo mode=0644
+  when: config.stat.exists == false
 
 - name: install google chrome
   yum: name=google-chrome-stable state=present
 
-- name: change file rights
-  file:
-    path: /usr/local/share/chromedriver
-    state: directory
-    mode: 0755
-
 - name: download chrome driver
-  command: 'cd /tmp && wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip'
+  command: 'wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip chdir=/tmp'
 
 - name: unarchive chrome driver
   unarchive:
     src: /tmp/chromedriver_linux64.zip
     dest: /tmp
 
-- command: mv /tmp/chromedriver_linux64 /usr/bin/chromedriver
+- name: move chrome driver to /usr/bin
+  command: mv /tmp/chromedriver /usr/bin/chromedriver
 
-- name: create simlink to chrome driver
+- name: change chromedriver rights
   file:
-    src: /usr/local/share/chromedriver
-    dest: /usr/bin/chromedriver
-    state: link
-
-- name: create simlink to chrome driver
-  file:
-    src: /usr/local/share/chromedriver
-    dest: /usr/local/bin/chromedriver
-    state: link
+    path: /usr/bin/chromedriver
+    mode: 0755
   environment:
     PATH: "/usr/bin/chromedriver:{{ ansible_env.PATH }}"
